@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     bool _isGrounded;
     bool _isFalling;
     int _jumpCount;
+    public int killCount;
 
     void CreateBullet()
     {

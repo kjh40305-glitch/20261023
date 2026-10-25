@@ -4,6 +4,7 @@ public class EnemyController : MonoBehaviour
 {
     public int Hp;
     Animator _animator;
+    private PlayerController _player;
 
     public void TakeDamage(int damage)
     {
@@ -13,6 +14,7 @@ public class EnemyController : MonoBehaviour
             _animator.SetTrigger("Die");
             gameObject.layer = LayerMask.NameToLayer("DeadObject");
             Destroy(gameObject, 1.5f);
+            _player.killCount++;
             return;
         }
         _animator.SetTrigger("Hit");
@@ -25,6 +27,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _player = FindAnyObjectByType<PlayerController>();
     }
 
     // Update is called once per frame
