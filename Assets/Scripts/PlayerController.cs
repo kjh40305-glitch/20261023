@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +15,7 @@ public class PlayerController : MonoBehaviour
     Vector2 _direction;
     bool _isGrounded;
     bool _isFalling;
+    int _jumpCount;
 
     void CreateBullet()
     {
@@ -57,55 +56,21 @@ public class PlayerController : MonoBehaviour
     }
     void OnJump()
     {
+        if (_jumpCount >= 2) return;
         _animator.Play("Jump", 0, 0f);
         _animator.SetInteger("JumpState", 1);
+        _isFalling = false;
+        _jumpCount += 1;
         _rigidbody.linearVelocityY = 0f;
         _rigidbody.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-
     }
-    void Move()
-    {
-        if (Keyboard.current == null) return;
-
-        if (Keyboard.current.leftArrowKey.wasReleasedThisFrame || Keyboard.current.rightArrowKey.wasReleasedThisFrame)
-        {
-            _animator.SetBool("IsWalk", false);
-        }
-        if (Keyboard.current.leftArrowKey.isPressed)
-        {
-            gameObject.transform.position += Vector3.left * 0.01f;
-            _animator.SetBool("IsWalk", true);
-            _sprRenderer.flipX = false;
-        }
-        if (Keyboard.current.rightArrowKey.isPressed)
-        {
-            gameObject.transform.position += Vector3.right * 0.01f;
-            _animator.SetBool("IsWalk", true);
-            _sprRenderer.flipX = true;
-        }
-        //if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-        //{
-        //    _animator.SetBool("IsWalk", false);
-        //}
-        //if(Input.GetKey(KeyCode.LeftArrow))
-        //{
-        //    gameObject.transform.position += Vector3.left * 0.01f;
-        //    _animator.SetBool("IsWalk", true);
-        //    _sprRenderer.flipX = false;
-        //}
-        //if (Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    gameObject.transform.position += Vector3.right * 0.01f;
-        //    _animator.SetBool("IsWalk", true);
-        //    _sprRenderer.flipX = true;
-        //}
-    }
-
+    
     void OnTriggerEnter2D(Collider2D collision)
     {
         _isGrounded = true;
         _isFalling = false;
         _animator.SetInteger("JumpState", 0);
+        _jumpCount = 0;
     }
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -136,10 +101,9 @@ public class PlayerController : MonoBehaviour
             if (_rigidbody.linearVelocity.y < 0)
             {
                 _animator.SetInteger("JumpState", 2);
+                _jumpCount = 1;
                 _isFalling = true;
             }
         }
-        //   Move();
-        //gameObject.transform.position += (Vector3)_direction * _speed * Time.deltaTime;
     }
 }
