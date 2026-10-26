@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     Vector2 _direction;
     bool _isGrounded;
     bool _isFalling;
-    int _jumpCount;
+    public int _jumpCount;
     public int killCount;
 
     void CreateBullet()
@@ -102,7 +102,10 @@ public class PlayerController : MonoBehaviour
             if (_rigidbody.linearVelocity.y < 0)
             {
                 _animator.SetInteger("JumpState", 2);
-                _jumpCount = 1;
+                if(_jumpCount == 0)
+                {
+                    _jumpCount = 1;
+                }
                 _isFalling = true;
             }
         }

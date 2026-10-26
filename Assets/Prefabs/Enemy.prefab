@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4939327360868743153}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.436906, y: -3.3521893, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -203,5 +203,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   Hp: 3
-  _collider: {fileID: 8853233866368882218}
-  _rigidbody: {fileID: 2255415271216645795}
+  _particle: {fileID: 9115502171000695239, guid: 4e8aeea6e334f214eaae8db448454773, type: 3}
