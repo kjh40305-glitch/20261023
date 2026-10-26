@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
         Hp = Mathf.Max(0, Hp -  damage);
         if(Hp <= 0)
         {
-            _animator.SetBool("isWalking", false);
+            _animator.SetBool("IsWalking", false);
             _animator.SetTrigger("Die");
             gameObject.layer = LayerMask.NameToLayer("DeadObject");
             Instantiate(_particle, transform.position, transform.rotation);
@@ -49,10 +49,6 @@ public class EnemyController : MonoBehaviour
                 gameObject.transform.position += Vector3.right * 0.005f;
                 _animator.SetBool("IsWalking", true);
                 transform.rotation = Quaternion.identity;
-            }
-            else
-            {
-                _animator.SetBool("IsWalking", false);
             }
         }
     }
