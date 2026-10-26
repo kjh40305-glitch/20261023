@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public int Hp;
+    public float randomSpeed;
     Animator _animator;
     private PlayerController _player;
     [SerializeField] GameObject _particle;
@@ -26,7 +27,10 @@ public class EnemyController : MonoBehaviour
     {
 
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void Awake()
+    {
+        randomSpeed = Random.Range(0.2f, 0.5f);
+    }
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -40,15 +44,19 @@ public class EnemyController : MonoBehaviour
         {
             if (gameObject.transform.position.x - _player.gameObject.transform.position.x > 0.1)
             {
-                gameObject.transform.position += Vector3.left * 0.005f;
+                gameObject.transform.position += Vector3.left * 0.01f * randomSpeed;
                 _animator.SetBool("IsWalking", true);
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
             else if (_player.gameObject.transform.position.x - gameObject.transform.position.x > 0.1)
             {
-                gameObject.transform.position += Vector3.right * 0.005f;
+                gameObject.transform.position += Vector3.right * 0.01f * randomSpeed;
                 _animator.SetBool("IsWalking", true);
                 transform.rotation = Quaternion.identity;
+            }
+            if(gameObject.transform.position.y - _player.gameObject.transform.position.y < 0.1)
+            {
+                _animator.SetTrigger("Attack");
             }
         }
     }
